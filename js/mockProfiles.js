@@ -81,6 +81,7 @@ export async function fetchGitHubProfiles(languages, location) {
           followers: userData.followers,
           following: userData.following,
           languages: Array.from(languages),
+          contributionGraphUrl: `https://ghchart.rshah.org/${user.login}`,
         };
       }
     );

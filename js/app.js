@@ -102,6 +102,12 @@ function showProfile(index) {
     languagesContainer.appendChild(badge);
   });
 
+  // Update contribution graph
+  const graphContainer = document.getElementById(
+    "contribution-graph-container"
+  );
+  graphContainer.innerHTML = `<img src="${profile.contributionGraphUrl}" alt="Contribution Graph" loading="lazy">`;
+
   currentProfileIndex = index;
 }
 

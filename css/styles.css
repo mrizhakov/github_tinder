@@ -214,4 +214,31 @@ body {
     background: #FF6B81;
     color: white;
     cursor: pointer;
+}
+
+.contribution-graph {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.contribution-graph h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+#contribution-graph-container {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f6f8fa;
+}
+
+#contribution-graph-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 } 
