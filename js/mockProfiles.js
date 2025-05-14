@@ -1,82 +1,93 @@
-export const mockProfiles = [
-  {
-    id: "1",
-    avatarUrl: "https://avatars.githubusercontent.com/u/583231?v=4",
-    username: "octocat",
-    followers: 150,
-    following: 75,
-    languages: ["JavaScript", "Ruby"],
-  },
-  {
-    id: "2",
-    avatarUrl: "https://avatars.githubusercontent.com/u/1?v=4",
-    username: "torvalds",
-    followers: 1200,
-    following: 0,
-    languages: ["C", "Python", "Shell"],
-  },
-  {
-    id: "3",
-    avatarUrl: "https://avatars.githubusercontent.com/u/2?v=4",
-    username: "defunkt",
-    followers: 800,
-    following: 200,
-    languages: ["Ruby", "JavaScript"],
-  },
-  {
-    id: "4",
-    avatarUrl: "https://avatars.githubusercontent.com/u/3?v=4",
-    username: "pjhyett",
-    followers: 600,
-    following: 150,
-    languages: ["Python", "Go"],
-  },
-  {
-    id: "5",
-    avatarUrl: "https://avatars.githubusercontent.com/u/4?v=4",
-    username: "wycats",
-    followers: 900,
-    following: 300,
-    languages: ["JavaScript", "Ruby", "Rust"],
-  },
-  {
-    id: "6",
-    avatarUrl: "https://avatars.githubusercontent.com/u/5?v=4",
-    username: "ezmobius",
-    followers: 400,
-    following: 100,
-    languages: ["Ruby", "Go"],
-  },
-  {
-    id: "7",
-    avatarUrl: "https://avatars.githubusercontent.com/u/6?v=4",
-    username: "ivey",
-    followers: 700,
-    following: 250,
-    languages: ["Python", "JavaScript"],
-  },
-  {
-    id: "8",
-    avatarUrl: "https://avatars.githubusercontent.com/u/7?v=4",
-    username: "evanphx",
-    followers: 500,
-    following: 180,
-    languages: ["Ruby", "JavaScript", "Go"],
-  },
-  {
-    id: "9",
-    avatarUrl: "https://avatars.githubusercontent.com/u/8?v=4",
-    username: "vanpelt",
-    followers: 300,
-    following: 90,
-    languages: ["Python", "Rust"],
-  },
-  {
-    id: "10",
-    avatarUrl: "https://avatars.githubusercontent.com/u/9?v=4",
-    username: "wayneeseguin",
-    followers: 450,
-    following: 120,
-    languages: ["Ruby", "JavaScript", "Python"],
-  },
-];
+// Function to fetch GitHub profiles based on language and location
+export async function fetchGitHubProfiles(languages, location) {
+  try {
+    // Create search query for each language
+    const searchPromises = Array.from(languages).map(async (lang) => {
+      const query = `language:${lang}+location:${location}+type:user`;
+      const response = await fetch(
+        `https://api.github.com/search/users?q=${query}&sort=followers&order=desc&per_page=10`,
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.items;
+    });
+
+    // Wait for all searches to complete
+    const results = await Promise.all(searchPromises);
+
+    // Flatten and deduplicate results
+    const uniqueUsers = new Map();
+    results.flat().forEach((user) => {
+      if (!uniqueUsers.has(user.login)) {
+        uniqueUsers.set(user.login, user);
+      }
+    });
+
+    // Fetch additional user details for each unique user
+    const userDetailsPromises = Array.from(uniqueUsers.values()).map(
+      async (user) => {
+        const response = await fetch(
+          `https://api.github.com/users/${user.login}`,
+          {
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`GitHub API error: ${response.status}`);
+        }
+
+        const userData = await response.json();
+
+        // Fetch user's repositories to get languages
+        const reposResponse = await fetch(
+          `https://api.github.com/users/${user.login}/repos?per_page=100`,
+          {
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+            },
+          }
+        );
+
+        if (!reposResponse.ok) {
+          throw new Error(`GitHub API error: ${reposResponse.status}`);
+        }
+
+        const repos = await reposResponse.json();
+
+        // Get unique languages from repositories
+        const languages = new Set();
+        repos.forEach((repo) => {
+          if (repo.language) {
+            languages.add(repo.language);
+          }
+        });
+
+        return {
+          id: user.id.toString(),
+          avatarUrl: user.avatar_url,
+          username: user.login,
+          followers: userData.followers,
+          following: userData.following,
+          languages: Array.from(languages),
+        };
+      }
+    );
+
+    return await Promise.all(userDetailsPromises);
+  } catch (error) {
+    console.error("Error fetching GitHub profiles:", error);
+    throw error;
+  }
+}

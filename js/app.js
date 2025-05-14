@@ -1,4 +1,4 @@
-import { mockProfiles } from "./mockProfiles.js";
+import { fetchGitHubProfiles } from "./mockProfiles.js";
 
 // DOM Elements
 const onboardingScreen = document.getElementById("onboarding");
@@ -16,6 +16,9 @@ const likeBtn = document.getElementById("like-btn");
 let selectedLanguages = new Set();
 let currentProfileIndex = 0;
 let filteredProfiles = [];
+
+// Loading state
+let isLoading = false;
 
 // Onboarding Logic
 languagePills.forEach((pill) => {
@@ -36,26 +39,42 @@ locationInput.addEventListener("input", updateContinueButton);
 
 function updateContinueButton() {
   continueBtn.disabled =
-    selectedLanguages.size === 0 || !locationInput.value.trim();
+    selectedLanguages.size === 0 || !locationInput.value.trim() || isLoading;
 }
 
-continueBtn.addEventListener("click", () => {
-  // Filter profiles based on selected languages
-  filteredProfiles = mockProfiles.filter((profile) =>
-    profile.languages.some((lang) => selectedLanguages.has(lang))
-  );
+continueBtn.addEventListener("click", async () => {
+  try {
+    isLoading = true;
+    updateContinueButton();
 
-  if (filteredProfiles.length === 0) {
-    showNoMoreProfiles();
-    return;
+    // Show loading state
+    continueBtn.textContent = "Loading...";
+
+    // Fetch profiles from GitHub
+    filteredProfiles = await fetchGitHubProfiles(
+      selectedLanguages,
+      locationInput.value.trim()
+    );
+
+    if (filteredProfiles.length === 0) {
+      showNoMoreProfiles();
+      return;
+    }
+
+    // Show first profile
+    showProfile(0);
+
+    // Switch screens
+    onboardingScreen.classList.add("hidden");
+    swipeDeckScreen.classList.remove("hidden");
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error fetching profiles. Please try again later.");
+  } finally {
+    isLoading = false;
+    continueBtn.textContent = "Continue";
+    updateContinueButton();
   }
-
-  // Show first profile
-  showProfile(0);
-
-  // Switch screens
-  onboardingScreen.classList.add("hidden");
-  swipeDeckScreen.classList.remove("hidden");
 });
 
 // Swipe Deck Logic
@@ -109,9 +128,6 @@ resetDeckBtn.addEventListener("click", () => {
   languagePills.forEach((pill) => pill.classList.remove("selected"));
   profileCard.classList.remove("hidden");
   noMoreProfiles.classList.add("hidden");
-
-  // Show first profile
-  showProfile(0);
 
   // Switch back to onboarding
   swipeDeckScreen.classList.add("hidden");
