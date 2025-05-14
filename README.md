@@ -1,52 +1,68 @@
 # Tinder for Devs
 
-A fun web application that mimics Tinder's swipe-card UX but matches users with developer profiles. Built with React, TypeScript, and modern web technologies.
+A desktop web application that helps developers find and connect with other developers based on programming languages and location. Built with vanilla HTML, CSS, and JavaScript.
 
 ## Features
 
-- Modern, responsive UI with smooth animations
-- Swipe-based interaction for liking/skipping profiles
-- Language preference selection
-- Location-based matching
-- Developer profile cards with GitHub-style information
-
-## Tech Stack
-
-- React + TypeScript
-- Vite for build tooling
-- Tailwind CSS for styling
-- React Spring for animations
-- Zustand for state management
-- React Use Gesture for swipe interactions
-
-## Getting Started
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+- Language-based developer matching
+- Location-based filtering
+- Like/Skip functionality
+- Modern, clean UI inspired by Tinder
+- No external dependencies
 
 ## Project Structure
 
-- `/src/components` - React components
-- `/src/store` - Zustand store and state management
-- `/src/data` - Mock data and types
-- `/src/assets` - Static assets
+```
+.
+├── index.html          # Main HTML file
+├── css/
+│   └── styles.css      # All styles
+├── js/
+│   ├── app.js          # Main application logic
+│   └── mockProfiles.js # Sample developer profiles
+└── README.md          # This file
+```
+
+## Setup and Running
+
+1. Clone the repository
+2. Open `index.html` in a modern web browser
+   - For the best experience, use Chrome, Firefox, or Safari
+   - The app is designed for desktop use only
 
 ## Development
 
-The project uses:
+The project uses vanilla JavaScript modules, so you'll need to serve the files through a web server. You can use any of these methods:
 
-- TypeScript for type safety
-- ESLint for code linting
-- Prettier for code formatting
-- Tailwind CSS for styling
+1. Using Python:
+
+   ```bash
+   # Python 3
+   python -m http.server
+
+   # Python 2
+   python -m SimpleHTTPServer
+   ```
+
+2. Using Node.js:
+
+   ```bash
+   npx serve
+   ```
+
+3. Using VS Code's Live Server extension
+
+Then open `http://localhost:8000` (or the port shown in your terminal) in your browser.
+
+## Browser Support
+
+The application uses modern JavaScript features and CSS properties. It's recommended to use a modern browser with the following minimum versions:
+
+- Chrome 60+
+- Firefox 55+
+- Safari 11+
+- Edge 16+
 
 ## License
 
-MIT
+MIT License
