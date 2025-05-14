@@ -1,0 +1,36 @@
+The biggest problem with “vibe coding” is it results in unintelligible code or full system breaks you can’t debug easily 
+
+Below are some heuristics to avoid these problems. Can be refined and added to system instructions in Claude code / windsurf / cursor etc 
+
+1. Each task or milestone is defined in a sprint markdown file. This is user defined — rather than “chatting” you store these / commit them in your repo
+
+Example of a milestone: I want a system to log trades to a database in a consistent format 
+
+2. The following must be accomplished:
+1. A system of logs must always be generated along with the feature. The logs should be accessible to the coding tool you use 
+2. Two demos must be built:
+A. Command line interface 
+B. Ipython notebook in example directory showing core functionality 
+3. The system should verify the CLI implementation works before building the ipynb
+4. The user must verify the functions in the ipynb before proceeding — at this point 50% time something breaks and results in scripts needing repair / iteration — log these in the sprint markdown. Chances are you need to instruct the system to read the log files here 
+5. After the script is verified it should be meaningfully described in architecture dot md - markdown file that describes your project
+6. Post verification the system should verify the script is written in the most efficient possible way. “Please review the code for efficiency / correct use of sync / async functions, thread safe execution, good security practices and documentation. Every important function should have example use. The goal is clean intelligible code that is safe but is as minimal as possible” 
+7. Rules for architecture dot md 
+- all script names/ file path, classes and important functions within a class are described with brief examples 
+- file paths formatted consistently 
+- no qualitative descriptions outside of minimal function 
+8. After architecture file is updated and user reviews then sprint response markdown file is generated with summary of execution 
+
+So the basic process is:
+1. Define the sprint so that it generates robust logging and tests 
+2. Run tests / break the script and iterate 
+3. Create human readable examples in ipynb or whatever your favorite interface is 
+4. Code clean up / efficiency 
+5. Light weight documentation in a single architecture file 
+6. Machine generated sprint response 
+7. Robust commits / descriptions once you’ve reached a good checkpoint 
+8. Repeat 
+
+I’m sure there are other methods but this is the only reliable way I’ve found for using ai to work on high stakes projects
+
+https://x.com/goodalexander/status/1921184751693492366?s=46

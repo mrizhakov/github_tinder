@@ -1,0 +1,90 @@
+--- Each task or milestone is defined in a sprint markdown file. ---
+
+# Sprint [Number] Planning Document
+**Sprint Duration**: [Start Date] - [End Date]
+**Sprint Goal**: [One sentence describing the main objective of this sprint]
+
+## 1. Sprint Overview
+### 1.1 Sprint Theme
+[Brief description of the sprint's focus and how it aligns with broader product/project goals]
+
+### 1.2 Team Capacity
+- Total team members: [Number]
+- Available story points: [Number]
+- Team velocity (previous sprint): [Number]
+- Planned capacity this sprint: [Number] story points
+
+### 1.3 Key Stakeholders
+- Product Owner: [Name]
+- Scrum Master: [Name]
+- Development Team: [Names]
+- Other Stakeholders: [Names]
+
+## 2. Sprint Backlog
+### 2.1 User Stories
+| ID | Story | Priority | Story Points | Acceptance Criteria | Assignee |
+|----|-------|----------|--------------|-------------------|-----------|
+| US-1 | [Story description] | [H/M/L] | [Points] | - Criterion 1<br>- Criterion 2 | [Name] |
+| US-2 | [Story description] | [H/M/L] | [Points] | - Criterion 1<br>- Criterion 2 | [Name] |
+
+### 2.2 Technical Tasks
+| ID | Task | Dependencies | Story Points | Assignee |
+|----|------|--------------|--------------|-----------|
+| T-1 | [Task description] | [US-1] | [Points] | [Name] |
+| T-2 | [Task description] | [US-2] | [Points] | [Name] |
+
+### 2.3 Bug Fixes
+| ID | Bug Description | Priority | Story Points | Assignee |
+|----|----------------|----------|--------------|-----------|
+| B-1 | [Bug description] | [H/M/L] | [Points] | [Name] |
+
+## 3. Dependencies and Risks
+### 3.1 Dependencies
+- [List external dependencies]
+- [List internal dependencies]
+
+### 3.2 Risks and Mitigation
+| Risk | Impact | Probability | Mitigation Plan |
+|------|---------|------------|-----------------|
+| [Risk 1] | [H/M/L] | [H/M/L] | [Mitigation strategy] |
+
+## 4. Definition of Done
+- [ ] Code complete
+- [ ] Unit tests written and passing
+- [ ] Integration tests passing
+- [ ] Code reviewed
+- [ ] Documentation updated
+- [ ] Deployed to staging environment
+- [ ] QA completed
+- [ ] Product Owner approval
+- [ ] Performance criteria met
+- [ ] Security requirements met
+
+## 5. Sprint Ceremonies
+### 5.1 Daily Standup
+- Time: [HH:MM AM/PM]
+- Location: [Physical/Virtual location]
+
+### 5.2 Sprint Review
+- Date: [Date]
+- Time: [HH:MM AM/PM]
+- Location: [Physical/Virtual location]
+
+### 5.3 Sprint Retrospective
+- Date: [Date]
+- Time: [HH:MM AM/PM]
+- Location: [Physical/Virtual location]
+
+## 6. Additional Notes
+[Any additional information, context, or special considerations for this sprint]
+
+## 7. Sprint Metrics
+- [ ] Burndown Chart
+- [ ] Velocity Chart
+- [ ] Sprint Health Indicators
+- [ ] Team Capacity Utilization
+
+---
+Last Updated: [Date]
+Version: [1.0]
+
